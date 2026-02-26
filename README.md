@@ -24,6 +24,16 @@ The database consists of 13 tables designed to ensure 3rd Normal Form (3NF) and 
 
 🚀 Installation & Setup (DataGrip)
 
+Before running the scripts, ensure you have a MySQL 8.0+ server running. You can do this in one of two ways:
+
+    Option A: Docker (Recommended)
+    Bash
+
+    docker run --name hotel-db -e MYSQL_ROOT_PASSWORD=yourpassword -p 3306:3306 -d mysql:latest
+
+    Option B: Local Server
+    Ensure your MySQL Workbench or MySQL Installer service is "Running" in your system services.
+
 Follow these steps to deploy the database with full operational capabilities:
 1. Create the Schema
 
