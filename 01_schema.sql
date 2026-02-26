@@ -59,14 +59,25 @@ CREATE TABLE RESERVATION (
                              CONSTRAINT chk_dates CHECK (check_out_date > check_in_date)
 );
 
--- 6. INVENTORY_ITEM (Minibar prices: Vodka, Water, etc.)
+
+-- 6. RESERVATION_GUEST
+CREATE TABLE RESERVATION_GUEST (
+    reservation_id INT NOT NULL,
+    guest_id INT NOT NULL,
+    is_primary BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (reservation_id, guest_id),
+    FOREIGN KEY (reservation_id) REFERENCES RESERVATION(reservation_id) ON DELETE CASCADE,
+    FOREIGN KEY (guest_id) REFERENCES GUEST(guest_id) ON DELETE CASCADE)
+);
+
+-- 7. INVENTORY_ITEM (Minibar prices: Vodka, Water, etc.)
 CREATE TABLE INVENTORY_ITEM (
                                 item_id INT AUTO_INCREMENT PRIMARY KEY,
                                 name VARCHAR(100) NOT NULL,
                                 unit_price DECIMAL(10, 2) NOT NULL
 );
 
--- 7. BILL (Total charges per reservation)
+-- 8. BILL (Total charges per reservation)
 CREATE TABLE BILL (
                       bill_id INT AUTO_INCREMENT PRIMARY KEY,
                       reservation_id INT NOT NULL,
@@ -75,7 +86,7 @@ CREATE TABLE BILL (
                       FOREIGN KEY (reservation_id) REFERENCES RESERVATION(reservation_id)
 );
 
--- 8. BILL_ITEM (Line items for early check-in, breakfast, minibar)
+-- 9. BILL_ITEM (Line items for early check-in, breakfast, minibar)
 CREATE TABLE BILL_ITEM (
                            bill_item_id INT AUTO_INCREMENT PRIMARY KEY,
                            bill_id INT NOT NULL,
@@ -84,3 +95,4 @@ CREATE TABLE BILL_ITEM (
                            amount DECIMAL(10, 2) NOT NULL,
                            FOREIGN KEY (bill_id) REFERENCES BILL(bill_id)
 );
+
